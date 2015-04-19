@@ -10,9 +10,16 @@ import UIKit
 
 let reuseIdentifier = "MovieCell"
 
+struct Movie {
+    let title : String
+    let description : String
+}
+
 class MovieCollectionViewController: UICollectionViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     var url : String? = nil
+    var movies : [Movie] = [Movie(title: "title1", description: "desc1"), Movie(title: "title2", description: "desc2"),
+        Movie(title: "title3", description: "desc3"), Movie(title: "title4", description: "desc4")]
 
     convenience init(title: String, url: String) {
         self.init(collectionViewLayout: UICollectionViewFlowLayout())
@@ -39,6 +46,10 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
 
         // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        view.backgroundColor = UIColor.whiteColor()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -50,23 +61,36 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
-        return 0
+        return 1
     }
-
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        return 0
+        return movies.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
     
         // Configure the cell
+        
+        cell.backgroundColor = UIColor.yellowColor()
     
         return cell
     }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+            return CGSize(width: 100, height: 100)
+    }
 
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 25.0, left: 25.0, bottom: 25.0, right: 25.0)
+    }
+    
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        navigationController?.pushViewController(MovieDetailViewController(title: movies[indexPath.row].title), animated: true)
+    }
+    
     // MARK: UICollectionViewDelegate
 
     /*

@@ -31,6 +31,13 @@ class CategoryListViewController: UITableViewController, UITableViewDelegate, UI
         MovieCategory.Upcoming: "Upcoming",
     ];
     
+    let moviesUrls = [
+        MovieCategory.BoxOffice: "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=dagqdghwaq3e3mxyrp7kmmj5&limit=20&country=US",
+        MovieCategory.InTheatres: "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theatres.json?apikey=dagqdghwaq3e3mxyrp7kmmj5&limit=20&country=US",
+        MovieCategory.Opening: "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/opening.json?apikey=dagqdghwaq3e3mxyrp7kmmj5&limit=20&country=US",
+        MovieCategory.Upcoming: "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey=dagqdghwaq3e3mxyrp7kmmj5&limit=20&country=US",
+    ];
+    
     let dvds = [
         DVDCategory.TopRentals: "Top Rentals",
         DVDCategory.CurrentReleases: "Current Releases",
@@ -96,7 +103,7 @@ class CategoryListViewController: UITableViewController, UITableViewDelegate, UI
         if type == .Movies {
             let key = movies.keys.array[indexPath.row]
             let value = movies.values.array[indexPath.row]
-            let collectionVC = MovieCollectionViewController(title: value, url: "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=dagqdghwaq3e3mxyrp7kmmj5&limit=20&country=US")
+            let collectionVC = MovieCollectionViewController(title: value, url: moviesUrls[key]!)
             navigationController?.pushViewController(collectionVC, animated: true)
         } else if type == .DVDs {
             let key = dvds.keys.array[indexPath.row]
