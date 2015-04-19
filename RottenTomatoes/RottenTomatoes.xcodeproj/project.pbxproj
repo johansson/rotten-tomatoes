@@ -11,6 +11,9 @@
 		BE878BA51AE4360500A8B3A8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE878BA41AE4360500A8B3A8 /* Images.xcassets */; };
 		BE878BA81AE4360500A8B3A8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BE878BA61AE4360500A8B3A8 /* LaunchScreen.xib */; };
 		BE878BB41AE4360500A8B3A8 /* RottenTomatoesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE878BB31AE4360500A8B3A8 /* RottenTomatoesTests.swift */; };
+		BE878BBF1AE442AC00A8B3A8 /* CategoryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE878BBD1AE442AC00A8B3A8 /* CategoryListViewController.swift */; };
+		BE878BC21AE4444800A8B3A8 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE878BC11AE4444800A8B3A8 /* Enums.swift */; };
+		BE878BC61AE460B300A8B3A8 /* MovieCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE878BC51AE460B300A8B3A8 /* MovieCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +35,9 @@
 		BE878BAD1AE4360500A8B3A8 /* RottenTomatoesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RottenTomatoesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE878BB21AE4360500A8B3A8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BE878BB31AE4360500A8B3A8 /* RottenTomatoesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RottenTomatoesTests.swift; sourceTree = "<group>"; };
+		BE878BBD1AE442AC00A8B3A8 /* CategoryListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CategoryListViewController.swift; path = ViewControllers/CategoryListViewController.swift; sourceTree = "<group>"; };
+		BE878BC11AE4444800A8B3A8 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		BE878BC51AE460B300A8B3A8 /* MovieCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieCollectionViewController.swift; path = ViewControllers/MovieCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +83,8 @@
 				BE878BA41AE4360500A8B3A8 /* Images.xcassets */,
 				BE878BA61AE4360500A8B3A8 /* LaunchScreen.xib */,
 				BE878B9B1AE4360500A8B3A8 /* Supporting Files */,
+				BE878BC71AE460D200A8B3A8 /* ViewControllers */,
+				BE878BC11AE4444800A8B3A8 /* Enums.swift */,
 			);
 			path = RottenTomatoes;
 			sourceTree = "<group>";
@@ -104,6 +112,15 @@
 				BE878BB21AE4360500A8B3A8 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BE878BC71AE460D200A8B3A8 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				BE878BBD1AE442AC00A8B3A8 /* CategoryListViewController.swift */,
+				BE878BC51AE460B300A8B3A8 /* MovieCollectionViewController.swift */,
+			);
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -205,6 +222,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE878BBF1AE442AC00A8B3A8 /* CategoryListViewController.swift in Sources */,
+				BE878BC61AE460B300A8B3A8 /* MovieCollectionViewController.swift in Sources */,
+				BE878BC21AE4444800A8B3A8 /* Enums.swift in Sources */,
 				BE878B9E1AE4360500A8B3A8 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

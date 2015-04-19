@@ -18,11 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         var tabBarController = UITabBarController()
         
-        let moviesViewController = UITableViewController(style: .Plain)
-        moviesViewController.title = "Movies"
-        
-        let dvdsViewController = UITableViewController(style: .Plain)
-        dvdsViewController.title = "DVDs"
+        let moviesViewController = CategoryListViewController(type: .Movies)
+        let dvdsViewController = CategoryListViewController(type: .DVDs)
         
         let moviesNavigationController = UINavigationController(rootViewController: moviesViewController)
         let dvdsNavigationController = UINavigationController(rootViewController: dvdsViewController)
