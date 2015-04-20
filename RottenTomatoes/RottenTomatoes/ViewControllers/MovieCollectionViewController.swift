@@ -7,19 +7,20 @@
 //
 
 import UIKit
+import SwiftyJSON
 
-let reuseIdentifier = "MovieCell"
+let reuseIdentifier = "MovieCollectionCell"
 
 struct Movie {
     let title : String
     let description : String
+    let poster : String
 }
 
 class MovieCollectionViewController: UICollectionViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     var url : String? = nil
-    var movies : [Movie] = [Movie(title: "title1", description: "desc1"), Movie(title: "title2", description: "desc2"),
-        Movie(title: "title3", description: "desc3"), Movie(title: "title4 title4", description: "desc4 deacs asdlkjasd l sfasd sasda,jas  lkajsdhasdjhkjhs faas,.safm.saflkajsflkjsafmas,fn  aslkjasdk  asldkj asdlk das ladslkj adsljk asd ldsalkj adsljk asdlkj asdlkj asdlkj asdljksadljk asdlkj asdljkasdljkasdljk asdlkj salkj sadljk asdlkj asdljk sdaklj sadljk dsajlk aslsjk sadljk sadljk asdljk sadljk asdljk assajklasklj")]
+    var movies : [Movie] = []
 
     convenience init(title: String, url: String) {
         self.init(collectionViewLayout: UICollectionViewFlowLayout())
@@ -37,18 +38,39 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = UIColor.whiteColor()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
+        collectionView!.delegate = self
+        collectionView!.dataSource = self
+        
+        let cellXib = UINib(nibName: "MovieCollectionViewCell", bundle: nil)
+        
         // Register cell classes
-        self.collectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.registerNib(cellXib, forCellWithReuseIdentifier: reuseIdentifier)
+        
+        let request = NSURLRequest(URL: NSURL(string: url!)!)
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            var js = JSON(data: data!)
+
+            if let movies = js["movies"].array {
+                for movie in movies {
+                    let t = movie["title"].string
+                    let s = movie["synopsis"].string
+                    var p : String? = nil
+                    if let posters = movie["posters"].dictionary {
+                        p = posters["original"]!.string
+                    }
+                    self.movies.append(Movie(title: t!, description: s!, poster: p!))
+                    self.collectionView?.reloadData()
+                }
+            }
+        }
 
         // Do any additional setup after loading the view.
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        view.backgroundColor = UIColor.whiteColor()
     }
 
     override func didReceiveMemoryWarning() {
@@ -70,11 +92,13 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! UICollectionViewCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! MovieCollectionViewCell
     
         // Configure the cell
         
-        cell.backgroundColor = UIColor.yellowColor()
+        cell.movieImageView.setImageWithURL(NSURL(string:movies[indexPath.row].poster))
+        cell.movieTitle.text = movies[indexPath.row].title
+        cell.movieTitle.sizeToFit()
     
         return cell
     }

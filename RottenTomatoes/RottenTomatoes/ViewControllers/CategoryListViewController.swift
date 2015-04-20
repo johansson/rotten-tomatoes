@@ -33,7 +33,7 @@ class CategoryListViewController: UITableViewController, UITableViewDelegate, UI
     
     let moviesUrls = [
         MovieCategory.BoxOffice: "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=dagqdghwaq3e3mxyrp7kmmj5&limit=20&country=US",
-        MovieCategory.InTheatres: "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theatres.json?apikey=dagqdghwaq3e3mxyrp7kmmj5&limit=20&country=US",
+        MovieCategory.InTheatres: "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json?apikey=dagqdghwaq3e3mxyrp7kmmj5&limit=20&country=US",
         MovieCategory.Opening: "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/opening.json?apikey=dagqdghwaq3e3mxyrp7kmmj5&limit=20&country=US",
         MovieCategory.Upcoming: "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey=dagqdghwaq3e3mxyrp7kmmj5&limit=20&country=US",
     ];

@@ -37,8 +37,9 @@ class MovieDetailViewController: UIViewController {
         
         movieTitle.text = movie!.title
         movieDescription.text = movie!.description
-        
         movieDescription.sizeToFit()
+        
+        movieImageView.setImageWithURL(NSURL(string: movie!.poster))
 
         // Do any additional setup after loading the view.
     }
@@ -49,7 +50,7 @@ class MovieDetailViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        view.backgroundColor = UIColor.yellowColor()
+
     }
     
     /*
