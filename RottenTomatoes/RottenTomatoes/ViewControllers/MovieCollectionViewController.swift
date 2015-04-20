@@ -23,11 +23,21 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
     
     var url : String? = nil
     var movies : [Movie] = []
+    var refreshControl : UIRefreshControl? = nil
 
     convenience init(title: String, url: String) {
         self.init(collectionViewLayout: UICollectionViewFlowLayout())
         self.url = url
         self.title = title
+        refreshControl = UIRefreshControl(frame: UIScreen.mainScreen().bounds)
+        refreshControl?.addTarget(self, action: "startRefresh", forControlEvents: .ValueChanged)
+        collectionView?.alwaysBounceVertical = true
+        collectionView?.addSubview(refreshControl!)
+    }
+    
+    func startRefresh() {
+        refreshData(false)
+        refreshControl!.endRefreshing()
     }
     
     override init(collectionViewLayout layout: UICollectionViewLayout) {
@@ -38,25 +48,22 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
         fatalError("NSCoder not supported")
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        SVProgressHUD.show()
-
-        collectionView!.delegate = self
-        collectionView!.dataSource = self
+    func refreshData(showProgressHUD: Bool) {
+        if showProgressHUD {
+            SVProgressHUD.show()
+        }
         
-        let cellXib = UINib(nibName: "MovieCollectionViewCell", bundle: nil)
-        
-        // Register cell classes
-        self.collectionView!.registerNib(cellXib, forCellWithReuseIdentifier: reuseIdentifier)
+        self.movies.removeAll(keepCapacity: true)
         
         let request = NSURLRequest(URL: NSURL(string: url!)!)
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-            SVProgressHUD.dismiss()
+            
+            if showProgressHUD {
+                SVProgressHUD.dismiss()
+            }
             
             var js = JSON(data: data!)
-
+            
             if let movies = js["movies"].array {
                 for movie in movies {
                     let t = movie["title"].string
@@ -77,6 +84,20 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
                 }
             }
         }
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        collectionView!.delegate = self
+        collectionView!.dataSource = self
+        
+        let cellXib = UINib(nibName: "MovieCollectionViewCell", bundle: nil)
+        
+        // Register cell classes
+        self.collectionView!.registerNib(cellXib, forCellWithReuseIdentifier: reuseIdentifier)
+        
+        refreshData(true)
 
         // Do any additional setup after loading the view.
     }
