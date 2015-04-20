@@ -19,7 +19,7 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
     
     var url : String? = nil
     var movies : [Movie] = [Movie(title: "title1", description: "desc1"), Movie(title: "title2", description: "desc2"),
-        Movie(title: "title3", description: "desc3"), Movie(title: "title4", description: "desc4")]
+        Movie(title: "title3", description: "desc3"), Movie(title: "title4 title4", description: "desc4 deacs asdlkjasd l sfasd sasda,jas  lkajsdhasdjhkjhs faas,.safm.saflkajsflkjsafmas,fn  aslkjasdk  asldkj asdlk das ladslkj adsljk asd ldsalkj adsljk asdlkj asdlkj asdlkj asdljksadljk asdlkj asdljkasdljkasdljk asdlkj salkj sadljk asdlkj asdljk sdaklj sadljk dsajlk aslsjk sadljk sadljk asdljk sadljk asdljk assajklasklj")]
 
     convenience init(title: String, url: String) {
         self.init(collectionViewLayout: UICollectionViewFlowLayout())
@@ -88,7 +88,7 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        navigationController?.pushViewController(MovieDetailViewController(title: movies[indexPath.row].title), animated: true)
+        navigationController?.pushViewController(MovieDetailViewController(movie: movies[indexPath.row]), animated: true)
     }
     
     // MARK: UICollectionViewDelegate

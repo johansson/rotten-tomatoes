@@ -45,6 +45,13 @@ class CategoryListViewController: UITableViewController, UITableViewDelegate, UI
         DVDCategory.Upcoming: "Upcoming"
     ];
     
+    let dvdsUrls = [
+        DVDCategory.TopRentals: "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/top_rentals.json?apikey=dagqdghwaq3e3mxyrp7kmmj5&limit=20&country=US",
+        DVDCategory.CurrentReleases: "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/current_releases.json?apikey=dagqdghwaq3e3mxyrp7kmmj5&limit=20&country=US",
+        DVDCategory.NewReleases: "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/new_releases.json?apikey=dagqdghwaq3e3mxyrp7kmmj5&limit=20&country=US",
+        DVDCategory.Upcoming: "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/upcoming.json?apikey=dagqdghwaq3e3mxyrp7kmmj5&limit=20&country=US",
+    ];
+    
     var type : CategoryListType = .Movies
 
     convenience init(type: CategoryListType) {
@@ -100,14 +107,20 @@ class CategoryListViewController: UITableViewController, UITableViewDelegate, UI
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var title : String? = nil
+        var url : String? = nil
+        
         if type == .Movies {
             let key = movies.keys.array[indexPath.row]
-            let value = movies.values.array[indexPath.row]
-            let collectionVC = MovieCollectionViewController(title: value, url: moviesUrls[key]!)
-            navigationController?.pushViewController(collectionVC, animated: true)
+            title = movies.values.array[indexPath.row]
+            url = moviesUrls[key]
         } else if type == .DVDs {
             let key = dvds.keys.array[indexPath.row]
-            println("DVDs -> \(dvds.values.array[indexPath.row]) pressed.")
+            title = dvds.values.array[indexPath.row]
+            url = dvdsUrls[key]
         }
+        
+        let collectionVC = MovieCollectionViewController(title: title!, url: url!)
+        navigationController?.pushViewController(collectionVC, animated: true)
     }
 }
