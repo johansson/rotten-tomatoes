@@ -143,6 +143,13 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! MovieCollectionViewCell
         
+        cell.movieImageView.image = nil
+        cell.movieTitle.text = nil
+        
+        if movies.count <= indexPath.row {
+            return cell
+        }
+        
         cell.movieImageView.setImageWithURL(NSURL(string:movies[indexPath.row].poster))
         cell.movieTitle.text = movies[indexPath.row].title
     
