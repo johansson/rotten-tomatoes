@@ -80,6 +80,8 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
                 dispatch_after(delayTime, dispatch_get_main_queue(), {
                     self.errorView?.removeFromSuperview()
                 })
+                
+                return
             }
             
             var js = JSON(data: data!)
