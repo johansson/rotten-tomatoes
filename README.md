@@ -32,6 +32,8 @@ Credits
 ---------
 * [Rotten Tomatoes API](http://developer.rottentomatoes.com/docs/read/JSON)
 * [AFNetworking](https://github.com/AFNetworking/AFNetworking)
+* [SwiftyJSON](https://github.com/SwiftyJSON/SwiftyJSON)
+* [SVProgressHUD](https://github.com/TransitApp/SVProgressHUD)
 * Tomato icon by Marco Olgio. Retrieved from Noun project: https://thenounproject.com/term/tomato/7791/
 * Clapper icon by Sam Horner. Retrieved from Noun project: https://thenounproject.com/term/clapper-board/51080/
 * DVD icon by Sash. Retrieved from Noun project: https://thenounproject.com/term/cd/48534/
