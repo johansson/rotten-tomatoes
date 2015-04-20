@@ -24,6 +24,7 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
     var url : String? = nil
     var movies : [Movie] = []
     var refreshControl : UIRefreshControl? = nil
+    var errorView : UIView? = nil
 
     convenience init(title: String, url: String) {
         self.init(collectionViewLayout: UICollectionViewFlowLayout())
@@ -33,6 +34,14 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
         refreshControl?.addTarget(self, action: "startRefresh", forControlEvents: .ValueChanged)
         collectionView?.alwaysBounceVertical = true
         collectionView?.addSubview(refreshControl!)
+        var bounds = CGRect(x: CGFloat(0), y: CGFloat(0), width: UIScreen.mainScreen().bounds.width, height: CGFloat(50))
+        var textBounds = CGRect(x: CGFloat(10), y: CGFloat(0), width: CGFloat(UIScreen.mainScreen().bounds.width - 10), height: CGFloat(50))
+        errorView = UIView(frame: bounds)
+        errorView?.backgroundColor = UIColor.redColor()
+        var errorText : UILabel = UILabel(frame: textBounds)
+        errorText.textColor = UIColor.whiteColor()
+        errorText.text = "An error has occurred. Please try again."
+        errorView?.addSubview(errorText)
     }
     
     func startRefresh() {
@@ -60,6 +69,17 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
             
             if showProgressHUD {
                 SVProgressHUD.dismiss()
+            }
+            
+            if let error = error {
+                self.collectionView!.addSubview(self.errorView!)
+                
+                // 2 seconds
+                let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(2 * Double(NSEC_PER_SEC)))
+                
+                dispatch_after(delayTime, dispatch_get_main_queue(), {
+                    self.errorView?.removeFromSuperview()
+                })
             }
             
             var js = JSON(data: data!)
@@ -94,17 +114,13 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
         
         let cellXib = UINib(nibName: "MovieCollectionViewCell", bundle: nil)
         
-        // Register cell classes
         self.collectionView!.registerNib(cellXib, forCellWithReuseIdentifier: reuseIdentifier)
         
         refreshData(true)
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -114,22 +130,16 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
     }
 
 
-    // MARK: UICollectionViewDataSource
-
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //#warning Incomplete method implementation -- Return the number of items in the section
         return movies.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! MovieCollectionViewCell
-    
-        // Configure the cell
         
         cell.movieImageView.setImageWithURL(NSURL(string:movies[indexPath.row].poster))
         cell.movieTitle.text = movies[indexPath.row].title
@@ -148,36 +158,5 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         navigationController?.pushViewController(MovieDetailViewController(movie: movies[indexPath.row]), animated: true)
     }
-    
-    // MARK: UICollectionViewDelegate
-
-    /*
-    // Uncomment this method to specify if the specified item should be highlighted during tracking
-    override func collectionView(collectionView: UICollectionView, shouldHighlightItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment this method to specify if the specified item should be selected
-    override func collectionView(collectionView: UICollectionView, shouldSelectItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
-    }
-    */
-
-    /*
-    // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
-    override func collectionView(collectionView: UICollectionView, shouldShowMenuForItemAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, canPerformAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) -> Bool {
-        return false
-    }
-
-    override func collectionView(collectionView: UICollectionView, performAction action: Selector, forItemAtIndexPath indexPath: NSIndexPath, withSender sender: AnyObject?) {
-    
-    }
-    */
 
 }

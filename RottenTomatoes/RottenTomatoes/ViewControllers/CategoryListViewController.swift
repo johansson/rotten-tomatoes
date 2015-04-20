@@ -69,6 +69,7 @@ class CategoryListViewController: UITableViewController, UITableViewDelegate, UI
         super.init(style: style)
     }
     
+    // otherwise the app crashes???
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         // Custom initialization
@@ -110,6 +111,8 @@ class CategoryListViewController: UITableViewController, UITableViewDelegate, UI
         var title : String? = nil
         var url : String? = nil
         
+        // only doing this because i wanted to experiment with enums.
+        // i would really just have the AppDelegate send in these data instead of doing if/else.
         if type == .Movies {
             let key = movies.keys.array[indexPath.row]
             title = movies.values.array[indexPath.row]
