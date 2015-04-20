@@ -11,9 +11,7 @@ import UIKit
 class MovieDetailViewController: UIViewController {
     
     @IBOutlet weak var movieImageView: UIImageView!
-    
     @IBOutlet weak var movieTitle: UILabel!
-    
     @IBOutlet weak var movieDescription: UILabel!
     
     var movie : Movie? = nil
@@ -38,8 +36,9 @@ class MovieDetailViewController: UIViewController {
         movieTitle.text = movie!.title
         movieDescription.text = movie!.description
         movieDescription.sizeToFit()
-        
+
         movieImageView.setImageWithURL(NSURL(string: movie!.poster))
+        movieImageView.setImageWithURL(NSURL(string: movie!.posterBig))
 
         // Do any additional setup after loading the view.
     }
@@ -47,10 +46,6 @@ class MovieDetailViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-
     }
     
     /*

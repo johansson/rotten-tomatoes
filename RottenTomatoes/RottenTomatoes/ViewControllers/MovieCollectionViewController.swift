@@ -15,6 +15,7 @@ struct Movie {
     let title : String
     let description : String
     let poster : String
+    let posterBig : String
 }
 
 class MovieCollectionViewController: UICollectionViewController, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -38,8 +39,6 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = UIColor.whiteColor()
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -61,10 +60,17 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
                     let t = movie["title"].string
                     let s = movie["synopsis"].string
                     var p : String? = nil
+                    var pb : String? = nil
                     if let posters = movie["posters"].dictionary {
                         p = posters["original"]!.string
+                        pb = posters["original"]!.string
+                        
+                        var range = pb!.rangeOfString(".*cloudfront.net/", options: .RegularExpressionSearch)
+                        if let range = range {
+                            pb = pb!.stringByReplacingCharactersInRange(range, withString: "https://content6.flixster.com/")
+                        }
                     }
-                    self.movies.append(Movie(title: t!, description: s!, poster: p!))
+                    self.movies.append(Movie(title: t!, description: s!, poster: p!, posterBig: pb!))
                     self.collectionView?.reloadData()
                 }
             }
@@ -76,6 +82,12 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        collectionView?.backgroundColor = UIColor.whiteColor()
     }
 
 
@@ -104,7 +116,7 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-            return CGSize(width: 100, height: 100)
+            return CGSize(width: 100, height: 150)
     }
 
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
