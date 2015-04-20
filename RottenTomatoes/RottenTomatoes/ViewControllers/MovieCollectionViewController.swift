@@ -133,7 +133,6 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
         
         cell.movieImageView.setImageWithURL(NSURL(string:movies[indexPath.row].poster))
         cell.movieTitle.text = movies[indexPath.row].title
-        cell.movieTitle.sizeToFit()
     
         return cell
     }
