@@ -19,7 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var tabBarController = UITabBarController()
         
         let moviesViewController = CategoryListViewController(type: .Movies)
+        moviesViewController.tabBarItem = UITabBarItem(title: "Movies", image: UIImage(named: "clapper"), tag: 0)
         let dvdsViewController = CategoryListViewController(type: .DVDs)
+        dvdsViewController.tabBarItem = UITabBarItem(title: "DVDs", image: UIImage(named: "dvd"), tag: 1)
         
         let moviesNavigationController = UINavigationController(rootViewController: moviesViewController)
         let dvdsNavigationController = UINavigationController(rootViewController: dvdsViewController)
