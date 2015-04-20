@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import SVProgressHUD
 
 let reuseIdentifier = "MovieCollectionCell"
 
@@ -40,8 +41,7 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        SVProgressHUD.show()
 
         collectionView!.delegate = self
         collectionView!.dataSource = self
@@ -53,6 +53,8 @@ class MovieCollectionViewController: UICollectionViewController, UICollectionVie
         
         let request = NSURLRequest(URL: NSURL(string: url!)!)
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+            SVProgressHUD.dismiss()
+            
             var js = JSON(data: data!)
 
             if let movies = js["movies"].array {
